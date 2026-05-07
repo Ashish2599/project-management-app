@@ -10,6 +10,12 @@ const createTaskSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
   dueDate: z.string().optional(),
+  assignedToId: z.string().optional(),
+})
+
+const updateTaskSchema = z.object({
+  status: z.enum(["TODO", "IN_PROGRESS", "DONE"]).optional(),
+  assignedToId: z.string().optional().nullable(),
 })
 
 export async function GET(
@@ -87,7 +93,14 @@ export async function POST(
     }
 
     const body = await request.json()
-    const { title, description, dueDate } = createTaskSchema.parse(body)
+    const { title, description, dueDate, assignedToId } = createTaskSchema.parse(body)
+
+    if (assignedToId) {
+      const validAssignee = project.ownerId === assignedToId || project.members.some(m => m.userId === assignedToId)
+      if (!validAssignee) {
+        return NextResponse.json({ error: "Assignee must be a project member" }, { status: 400 })
+      }
+    }
 
     const task = await prisma.task.create({
       data: {
@@ -95,6 +108,7 @@ export async function POST(
         description,
         dueDate: dueDate ? new Date(dueDate) : undefined,
         projectId: id,
+        assignedToId: assignedToId || undefined,
       },
       include: {
         assignedTo: {
@@ -108,3 +122,4 @@ export async function POST(
     return NextResponse.json({ error: "Invalid request" }, { status: 400 })
   }
 }
+

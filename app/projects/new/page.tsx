@@ -44,59 +44,52 @@ export default function NewProject() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <Link href="/dashboard" className="text-indigo-600 hover:text-indigo-900">
-            ← Back to Dashboard
-          </Link>
-        </div>
-      </header>
+    <div className="min-h-screen bg-slate-950 text-white">
+      <div className="absolute inset-x-0 top-0 h-72 bg-gradient-to-r from-cyan-500 via-slate-900 to-slate-950 opacity-80 blur-3xl" />
+      <div className="relative mx-auto max-w-4xl px-6 py-16 lg:px-8">
+        <div className="rounded-[2rem] border border-white/10 bg-slate-900/90 p-8 shadow-2xl shadow-slate-950/20 backdrop-blur-xl">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300/80">New project</p>
+              <h1 className="mt-3 text-4xl font-semibold tracking-tight text-white">Create your next project</h1>
+              <p className="mt-2 text-sm text-slate-300">Add new workspaces and organize tasks with your team.</p>
+            </div>
+            <Link href="/dashboard" className="rounded-full border border-slate-700 bg-slate-950/80 px-5 py-2.5 text-sm font-semibold text-slate-100 transition hover:bg-slate-800/90">
+              Back to dashboard
+            </Link>
+          </div>
 
-      <main className="max-w-2xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-        <div className="bg-white shadow rounded-lg p-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-6">Create New Project</h1>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Project Name</label>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="Enter project name"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Description</label>
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="Enter project description"
-                rows={4}
-              />
-            </div>
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-            <div className="flex gap-4">
-              <button
-                type="submit"
-                disabled={loading}
-                className="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 disabled:bg-gray-400"
-              >
+          <div className="mt-10 rounded-3xl border border-white/10 bg-slate-100/95 p-8 text-slate-950 shadow-lg shadow-slate-950/10">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-slate-700">Project Name</label>
+                <input
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="input-field"
+                  placeholder="Enter project name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700">Description</label>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="input-field min-h-[140px] resize-none"
+                  placeholder="Describe the project goals"
+                  rows={4}
+                />
+              </div>
+              {error && <p className="text-sm text-red-500">{error}</p>}
+              <button type="submit" disabled={loading} className="btn-primary w-full">
                 {loading ? "Creating..." : "Create Project"}
               </button>
-              <Link
-                href="/dashboard"
-                className="flex-1 border border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-50 text-center"
-              >
-                Cancel
-              </Link>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </main>
+      </div>
     </div>
   )
 }

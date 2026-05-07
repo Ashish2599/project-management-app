@@ -26,55 +26,70 @@ export default function SignIn() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
-          </h2>
+    <div className="min-h-screen bg-slate-950 text-white">
+      <div className="absolute inset-x-0 top-0 h-72 bg-gradient-to-r from-indigo-500 via-slate-900 to-slate-950 opacity-80 blur-3xl" />
+      <div className="relative mx-auto flex min-h-screen max-w-4xl items-center justify-center px-6 py-16 lg:px-8">
+        <div className="grid w-full gap-10 rounded-[2rem] border border-white/10 bg-white/10 p-8 shadow-2xl shadow-slate-950/20 backdrop-blur-xl lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-indigo-300/80">Secure login</p>
+              <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">Welcome back</h1>
+              <p className="max-w-xl text-sm leading-6 text-slate-300">
+                Sign in to manage your projects, assign tasks, and stay on top of team progress.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-slate-200/10 bg-slate-950/80 p-6">
+              <p className="text-sm uppercase tracking-[0.24em] text-slate-400">Benefits</p>
+              <ul className="mt-4 space-y-3 text-sm text-slate-300">
+                <li>• Clean project dashboards</li>
+                <li>• Role-based access control</li>
+                <li>• Overdue task alerts</li>
+              </ul>
+            </div>
+          </div>
+          <div className="rounded-[2rem] border border-white/10 bg-slate-100/95 p-8 shadow-lg shadow-slate-950/10 text-slate-950">
+            <h2 className="text-2xl font-semibold">Sign in</h2>
+            <p className="mt-2 text-sm text-slate-500">Use your email and password to access the workspace.</p>
+            <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+              <div className="space-y-4">
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-slate-700">Email address</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    className="input-field"
+                    placeholder="you@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="password" className="block text-sm font-medium text-slate-700">Password</label>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    required
+                    className="input-field"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+              </div>
+              {error && <p className="text-sm text-red-500">{error}</p>}
+              <button type="submit" className="btn-primary w-full">Sign in</button>
+              <p className="text-center text-sm text-slate-500">
+                Don’t have an account?{' '}
+                <Link href="/auth/signup" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  Sign up
+                </Link>
+              </p>
+            </form>
+          </div>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-          </div>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              Sign in
-            </button>
-          </div>
-          <div className="text-center">
-            <Link href="/auth/signup" className="text-indigo-600 hover:text-indigo-500">
-              Don't have an account? Sign up
-            </Link>
-          </div>
-        </form>
       </div>
     </div>
   )
