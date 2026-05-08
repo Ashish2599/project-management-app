@@ -17,16 +17,21 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Email and password required")
         }
+
         const user = await prisma.user.findUnique({
           where: { email: credentials.email }
         })
+
         if (!user) {
           throw new Error("User not found")
         }
+
         const isPasswordValid = await bcrypt.compare(credentials.password, user.password)
+
         if (!isPasswordValid) {
           throw new Error("Invalid password")
         }
+
         return {
           id: user.id,
           email: user.email,
@@ -35,6 +40,7 @@ export const authOptions: NextAuthOptions = {
       }
     })
   ],
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
@@ -42,6 +48,7 @@ export const authOptions: NextAuthOptions = {
       }
       return token
     },
+
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string
@@ -49,9 +56,13 @@ export const authOptions: NextAuthOptions = {
       return session
     }
   },
+
   session: {
     strategy: "jwt"
   },
+
+  secret: process.env.NEXTAUTH_SECRET,
+
   pages: {
     signIn: "/auth/signin",
   },
